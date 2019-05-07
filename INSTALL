@@ -3,7 +3,11 @@ cd /your_path_to/DrLink_src
 # compile gzstream lib (DrLink works with .gz compressed files with the help of gzstream)
 
 cd gzstream
+rm libgzstream.a ../gzlib/libgzstream.a
+
+make clean
 make
+
 cp libgzstream.a ../gzlib
 cd ..
 
