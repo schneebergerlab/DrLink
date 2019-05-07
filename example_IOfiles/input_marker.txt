@@ -1,0 +1,8 @@
+#flag	chr	pos	ref	alt - headline not needed
+ks	1	10904	A	T
+ks	1	18057	C	T
+ks	2	32210	T	C
+ks	3	37388	G	T
+ks	4	38554	G	T
+ks	5	71326	G	T
+ks	5	71348	C	T

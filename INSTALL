@@ -1,0 +1,31 @@
+cd /your_path_to/DrLink_src
+
+# compile gzstream lib (DrLink works with .gz compressed files with the help of gzstream)
+
+cd gzstream
+make
+cp libgzstream.a ../gzlib
+cd ..
+
+# compile DrLink
+
+make
+
+export PATH=/your_path_to/DrLink_src/:$PATH
+
+# test 
+
+DrLink 
+
+# which should print the following info
+
+#   Given linked-read sequencing of recombinants, this tool identifies meiotic recombinations.
+#   (version 1.0 - compiled on MM DD YYYY, HH:MM:SS)
+#
+#   Usage: DrLink subprogram [options] 
+#
+#   Subprograms: 
+#   	preprocess 	(Usage: please check options with DrLink preprocess)
+#   	molecule   	(Usage: please check options with DrLink molecule)
+#   	recombis   	(Usage: please check options with DrLink recombis)
+#   	intersec   	(Usage: please check options with DrLink intersec)
