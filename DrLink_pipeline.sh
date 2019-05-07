@@ -1,4 +1,4 @@
-######################  DrLink (documentation)                               ###########################################
+######################  DrLink pipeline (documentation)                      ###########################################
 ######################  under development by Hequan Sun                      ###########################################
 ######################  at Schneeberger Lab, MPIPZ (Koeln, Germany)          ###########################################
 ####       given longranger read alignments (molecule recovery), read-barcodes in vcf (barcode extraction) #############
