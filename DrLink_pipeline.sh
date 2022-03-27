@@ -2,7 +2,7 @@
 ######################  under development by Hequan Sun              (MPIPZ, Germany)  #################################
 ####       given longranger read alignments (molecule recovery), read-barcodes in vcf (barcode extraction) #############
 ####       and parental SNP markers, DrLink predicts CO breakpoints                                    #################
-#
+####
 # step 0. compile DrLink under g++ (Debian 6.3.0-18+deb9u1) (supposing longranger > version 2.1.6 has been installed): check INSTALL file
 #
 # step 1. read alignment and variant calling (/barcode-assignment) using longranger (RAM 96GB in days to 2 weeks in Athal)
