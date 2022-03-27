@@ -5,6 +5,8 @@
    2018-01-01
    
    this checks alignments on selecting markers in recombis step.
+   
+   Developed by Hequan Sun, Email: sun@mpipz.mpg.de
 */
 #include                   <stdio.h>
 #include                  <string.h>
