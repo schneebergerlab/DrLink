@@ -1,7 +1,5 @@
 ###################################  DrLink pipeline (documentation)  ##################################################
 ######################  under development by Hequan Sun              (MPIPZ, Germany)  #################################
-######################                       Beth A. Rowan           (UC Davis, USA)   #################################
-######################                       Korbinian Schneeberger  (MPIPZ, Germany)  #################################
 ####       given longranger read alignments (molecule recovery), read-barcodes in vcf (barcode extraction) #############
 ####       and parental SNP markers, DrLink predicts CO breakpoints                                    #################
 #
