@@ -270,9 +270,9 @@ bool convertBam(int argc, char* argv[])
     }  
     cout << "   Info: in total " 
          << numraw  
-         << " aligment lines, of which " 
+         << " alignment lines, of which " 
          << numcov               
-         << " with barcode info coverted." 
+         << " with barcode info converted." 
          <<  endl;
     cout << "   Info: time on converting streaming bam info: " 
          << (float)(clock()-tbeg)/CLOCKS_PER_SEC 
