@@ -1108,7 +1108,8 @@ bool output_real_molecule_len_distribution(map<int, unsigned long> molecule_len_
             << (*mlitr).second << endl;
         mlitr ++;
     }
-    ofp.close();        
+    ofp.close(); 
+    return true;
 }
 //    
 bool check_mole_local_base_cov(unsigned long   mole_start,
