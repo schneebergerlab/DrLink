@@ -149,6 +149,7 @@ bool check_mole_local_base_cov(unsigned long   mole_start,
 bool output_real_molecule_len_distribution(
                          map<int, unsigned long> molecule_len_control, 
                          string outPrefix);
+int get_chr_num_ii(string marker_file);
 bool verbose = true; // TODO: get from option
 // main
 bool detect_recombsite(int argc, char* argv[])
@@ -2242,15 +2243,31 @@ bool get_recombis_options(int                  argc,
     bool maf1   = false;
     bool maf2   = false;
     bool fsplit = false;
+    int  n_chr  = 0;
     // log cmdline
     cout << "   CMDline: ";
     ic = 0;
     while(ic < argc)
     {
         cout << argv[ic] << " ";
+	string optstr = (string)argv[ic];
+	if(optstr.compare("--sma") == 0 || optstr.compare("--spa") == 0)
+	{
+	    int chr_n = get_chr_num_ii( (string)argv[ic+1] );
+	    if( chr_n > n_chr )
+	    {
+		n_chr = chr_n;
+	    }
+	}
         ic ++;
     }
     cout << endl;
+    if(n_chr == 0)
+    {
+	cout << "   Error: number of chrs detected in marker file is 0. " << endl;
+	return false;
+    }
+    
     // get values
     ic = 2;    
     while (ic < argc) 
@@ -2266,20 +2283,29 @@ bool get_recombis_options(int                  argc,
                 tmpflagstr = splitflaginfo[splitflaginfo.size()-1];
             }
             string chrfilename(""); 
-            string tmpchr("12345");                // TODO: generalize to other number of chromosomes
-            for(int ichr = 0; ichr < 5; ichr ++)
+            // string tmpchr("12345");                // TODO: generalize to other number of chromosomes
+	    map<int, string> chr_str;
+	    for(int ichr = 0; ichr < n_chr; ichr ++)
+	    {
+	        std::stringstream ss;
+		ss.str("");
+	        ss << ichr + 1;
+	        chr_str.insert(std::pair<int, string>(ichr, ss.str() ) );
+	    }
+            for(int ichr = 0; ichr < n_chr; ichr ++)
             {
-                chrfilename = tmpfileflag + "_subfile_chr_" + tmpchr.substr(ichr, 1) + "_longranger_variants.vcf.gz";
+                chrfilename = tmpfileflag + "_subfile_chr_" + chr_str[ichr] + "_longranger_variants.vcf.gz";
                 igzstream iitfp;
                 iitfp.open(chrfilename.c_str(), ios::in);
                 if(iitfp.good())
                 {
-                    (*visitedVarChr).insert(std::pair<string, string>(tmpchr.substr(ichr, 1), chrfilename));
+                    (*visitedVarChr).insert(std::pair<string, string>(chr_str[ichr], chrfilename));
                     iitfp.close();
                     cout << "   Info: with flag "
                          << tmpfileflag 
                          << ", found vcf file for chr " 
-                         << tmpchr.substr(ichr, 1)
+                       //<< tmpchr.substr(ichr, 1)
+			 << chr_str[ichr]
                          << endl;
                 }
                 else
@@ -2287,21 +2313,23 @@ bool get_recombis_options(int                  argc,
                     cout << "   Warning: with flag " 
                          << tmpfileflag 
                          << ", cannot find vcf file for chr " 
-                         << tmpchr.substr(ichr, 1)
+                       //<< tmpchr.substr(ichr, 1)
+			 << chr_str[ichr]
                          << endl;
                     //return false;
                 }
                 chrfilename.clear();
-                chrfilename = tmpfileflag + "_subfile_chr_" + tmpchr.substr(ichr, 1) + "_DrLink_molecules.txt.gz";
+                chrfilename = tmpfileflag + "_subfile_chr_" + chr_str[ichr] + "_DrLink_molecules.txt.gz";
                 iitfp.open(chrfilename.c_str(), ios::in);
                 if(iitfp.good())
                 {
-                    (*visitedMolChr).insert(std::pair<string, string>(tmpchr.substr(ichr, 1), chrfilename));
+                    (*visitedMolChr).insert(std::pair<string, string>(chr_str[ichr], chrfilename));
                     iitfp.close();
                     cout << "   Info: with flag "
                          << tmpfileflag 
                          << ", found molecule table file for chr " 
-                         << tmpchr.substr(ichr, 1)
+                       //<< tmpchr.substr(ichr, 1)
+			 << chr_str[ichr]
                          << endl;                    
                 }
                 else
@@ -2309,7 +2337,8 @@ bool get_recombis_options(int                  argc,
                     cout << "   Warning: with flag " 
                          << tmpfileflag 
                          << " cannot find molecule table file for chr " 
-                         << tmpchr.substr(ichr, 1)
+                       //<< tmpchr.substr(ichr, 1)
+			 << chr_str[ichr]
                          << endl;
                     //return false;
                 }                
@@ -2700,4 +2729,27 @@ bool get_recombis_options(int                  argc,
         return false;          
     }    
     return true;
+}
+int get_chr_num_ii(string marker_file)
+{
+    // here we get the number of chrs in the given marker list
+    ifstream ifp;
+    if(!ifp.good() )
+    {
+        cout << "   warning: file not found. " << endl;
+        return 0;
+    }
+    while(ifp.good())
+    {
+        string line("");
+        getline(ifp, line);
+        if(line.size()==0 || line[0]=='#') continue;
+        vector<string> lineinfo = split_string(line, '\t');
+        string chrid = lineinfo[1];
+        if(chrs.find(chrid) ==chrs.end() )
+        {
+           chrs.insert(std::pair<string, int>(chrid, 1) );
+        }
+    }
+    return chrs.size();
 }
