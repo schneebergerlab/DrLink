@@ -2739,6 +2739,7 @@ int get_chr_num_ii(string marker_file)
         cout << "   warning: file not found. " << endl;
         return 0;
     }
+    map<string, int> chrs;
     while(ifp.good())
     {
         string line("");
