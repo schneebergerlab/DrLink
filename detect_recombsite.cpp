@@ -2266,8 +2266,10 @@ bool get_recombis_options(int                  argc,
     {
 	cout << "   Error: number of chrs detected in marker file is 0. " << endl;
 	return false;
+    }else
+    {
+	cout << "   Info: " << n_chr << "  chr-data will be collected. " << endl;
     }
-    
     // get values
     ic = 2;    
     while (ic < argc) 
@@ -2291,6 +2293,7 @@ bool get_recombis_options(int                  argc,
 		ss.str("");
 	        ss << ichr + 1;
 	        chr_str.insert(std::pair<int, string>(ichr, ss.str() ) );
+		cout << "   Info: " << ichr << " chr number id: " << ss.str() << endl;
 	    }
             for(int ichr = 0; ichr < n_chr; ichr ++)
             {
